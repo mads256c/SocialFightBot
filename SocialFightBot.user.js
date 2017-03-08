@@ -10,10 +10,11 @@
 // ==/UserScript==
 
 (function() {
+    var isRegenerating = false;
+    
     //Get all the html things.
     var HTMLAttack = document.getElementById("attack1");
     var HTMLHealth = document.getElementById("health");
-    var HTMLModal = document.getElementById("myModal2");
 
     var HTMLHealthString = HTMLHealth.innerHTML.replace(/\s+/, "");
     var split1 = HTMLHealthString.split("/");
@@ -21,24 +22,27 @@
 
     var PlayerHealth = split1[0];
     var PlayerHealthMax = split2[0];
-    var PlayerHealthMin = PlayerHealth / 4;
+    var PlayerHealthMin = PlayerHealthMax * 0.75;
+    
 
-    console.log(GM_getValue("isRegenerating", false));
 
     if (PlayerHealth <= PlayerHealthMin)
     {
-        GM_setValue("isRegenerating", true);
+        isRegenerating = true;
     }
 
-    if (PlayerHealth => PlayerHealthMax)
+    else if (PlayerHealth >= PlayerHealthMax)
     {
-        GM_setValue("isRegenerating", false);
+        isRegenerating = false;
     }
 
-    if (!GM_getValue("isRegenerating", false))
+    if (!isRegenerating)
     {
         document.getElementById("attack1").click();
     }
+    
+        console.log(isRegenerating);
+
 
 
         setTimeout(function () {
