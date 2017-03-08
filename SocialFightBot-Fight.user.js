@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.3
+// @version      0.4
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http://socialfight.dk/fight
