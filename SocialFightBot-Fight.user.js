@@ -1,12 +1,10 @@
 // ==UserScript==
-// @name         SocialFightBot
+// @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.2
+// @version      0.3
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http://socialfight.dk/fight
-// @grant        GM_setValue
-// @grant        GM_getValue
 // ==/UserScript==
 
 (function() {
@@ -16,6 +14,8 @@
     var HTMLAttack = document.getElementById("attack1");
     var HTMLHealth = document.getElementById("health");
 
+    document.getElementById("attack1").innerHTML = "Automatisk";
+    
     var HTMLHealthString = HTMLHealth.innerHTML.replace(/\s+/, "");
     var split1 = HTMLHealthString.split("/");
     var split2 = split1[1].split("HP");
@@ -35,9 +35,17 @@
     {
         isRegenerating = false;
     }
+    
+    
 
-    if (!isRegenerating)
+    if (isRegenerating)
     {
+        console.log("Currently regenerating health.");
+        console.log("Deired health: " + PlayerHealthMin);
+        console.log("Current health: " + PlayerHealth);
+    }
+    
+    else {
         document.getElementById("attack1").click();
     }
     
@@ -47,5 +55,5 @@
 
         setTimeout(function () {
             location.reload();
-    }, 30 * 1000);
+    }, 15 * 1000);
 })();
