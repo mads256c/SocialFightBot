@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Stats
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.2
+// @version      0.3
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -27,15 +27,13 @@
     document.body.appendChild(StatsDiv);
     //Load the stats from StatsURL
     $( "#statsdiv" ).load( StatsURL + " .stats" );
-    $("<div>").load(StatsURL + " .weapon", function() {
+
+    $("<div>").load(StatsURL + " .weapon, .girl", function() {
       $("#statsdiv").append($(this));
-        $("<div>").load(StatsURL + " .girl", function() {
-          $("#statsdiv").append($(this));
             //Delete unneeded items
             document.body.getElementsByClassName("buttons")[0].outerHTML = "";
             document.body.getElementsByClassName("girl")[0].children[0].innerHTML = "";
             //Remove minHeight;
             document.body.getElementsByClassName("girl")[0].style.minHeight = "0";
-        });
     });
 })();
