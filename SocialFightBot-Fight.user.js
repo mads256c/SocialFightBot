@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.6
+// @version      0.7
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http://socialfight.dk/fight
@@ -12,33 +12,21 @@
     var isRegenerating = false;
     const responses = ["Vind en gratis pik i røven, sendes over MobilePay.",
                        "Tak fordi du bruger vores bot!",
-                       "Hvorfor MobilPay'er du ikke bare os?",
                        "Hættedregne represent!",
                        "BAZINGA!",
                        "Quality comedy!",
                        "Strip for os!",
                        "If a women has starch masks on her body does that mean she has been pargnet before.?",
-                       "My friends did a luigi board.. and it mentioned me! PLEAS HELP!?"];
+                       "My friends did a luigi board.. and it mentioned me! PLEAS HELP!?",
+                       "YEE",
+                       "Vidste du at vi kan skrive lige hvad vi vil i denne boks?",
+                       "hvad vis du vis hvad han har gjort så ville du os forstå det 👌"];
 
     //The HTML constants, so they can be updated if the site changes.
     const HTMLAttack = "attack1";
     const HTMLAttackDiv = "normalattack";
     const HTMLHealth = "health";
     const HTMLAlert = "alert";
-
-    //The site killed the alert, so we are adding it back in here:
-    const AlertHTML = "<a class=\"alert\" href=\"#\">Shitty Alert!</a>";
-    var AlertDIV = document.createElement('div');
-    AlertDIV.className = "alert";
-    AlertDIV.innerHTML = AlertHTML;
-    //It have to be inserted at the top of the body before the header.
-    document.body.insertBefore(AlertDIV, document.body.firstChild);
-
-    //A fix to be able to see the whole page after the alert has been added back in.
-    document.getElementsByTagName("HEADER")[0].style.paddingTop = "30px";
-
-    //Take a random text in responses and show it in the top of the website.
-    document.getElementsByClassName(HTMLAlert)[0].innerHTML = responses[Math.floor(Math.random()*responses.length)];
 
 
     //Take the raw HTML health and make it into something useful.
@@ -78,5 +66,20 @@
 
         setTimeout(function () {
             location.reload();
-    }, 100 * 1000);
+    }, 15 * 1000);
+    
+    //The site killed the alert, so we are adding it back in here:
+    const AlertHTML = "<a class=\"alert\" href=\"#\">Shitty Alert!</a>";
+    var AlertDIV = document.createElement('DIV');
+    AlertDIV.className = HTMLAlert;
+    AlertDIV.innerHTML = AlertHTML;
+    //It have to be inserted at the top of the body before the header.
+    document.body.insertBefore(AlertDIV, document.body.firstChild);
+
+    //A fix to be able to see the whole page after the alert has been added back in.
+    document.getElementsByTagName("HEADER")[0].style.paddingTop = "30px";
+
+    //Take a random text in responses and show it in the top of the website.
+    document.getElementsByClassName(HTMLAlert)[0].innerHTML = responses[Math.floor(Math.random()*responses.length)];
+    
 })();
