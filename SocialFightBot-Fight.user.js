@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.5
+// @version      0.6
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http://socialfight.dk/fight
@@ -22,15 +22,24 @@
 
     //The HTML constants, so they can be updated if the site changes.
     const HTMLAttack = "attack1";
+    const HTMLAttackDiv = "normalattack";
     const HTMLHealth = "health";
     const HTMLAlert = "alert";
 
-    //Check if null
-    if (!(!document.getElementsByClassName(HTMLAlert)))
-    {
-        //Take a random text in responses and show it in the top of the website.
-        document.getElementsByClassName(HTMLAlert)[0].innerHTML = responses[Math.floor(Math.random()*responses.length)];
-    }
+    //The site killed the alert, so we are adding it back in here:
+    const AlertHTML = "<a class=\"alert\" href=\"#\">Shitty Alert!</a>";
+    var AlertDIV = document.createElement('div');
+    AlertDIV.className = "alert";
+    AlertDIV.innerHTML = AlertHTML;
+    //It have to be inserted at the top of the body before the header.
+    document.body.insertBefore(AlertDIV, document.body.firstChild);
+
+    //A fix to be able to see the whole page after the alert has been added back in.
+    document.getElementsByTagName("HEADER")[0].style.paddingTop = "30px";
+
+    //Take a random text in responses and show it in the top of the website.
+    document.getElementsByClassName(HTMLAlert)[0].innerHTML = responses[Math.floor(Math.random()*responses.length)];
+
 
     //Take the raw HTML health and make it into something useful.
     var HTMLHealthString = document.getElementById(HTMLHealth).innerHTML.replace(/\s+/, "");
@@ -69,5 +78,5 @@
 
         setTimeout(function () {
             location.reload();
-    }, 15 * 1000);
+    }, 100 * 1000);
 })();
