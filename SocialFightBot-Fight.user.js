@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.10
+// @version      0.11
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -15,15 +15,15 @@
 const RefreshDelay = 15;
 
 //The HTML class or id names. If the site changes the names we can easily change it here.
-const AttackId = "attack1";
 const HealthId = "health";
+const AttackId = "attack1";
 const AlertClass = "alert";
 
 //The site killed the alert, so we are adding it back in here:
 const AlertHTML = "<a class=\"alert\" href=\"#\">Shitty Alert!</a>";
 
 //Stupid peices of text that we display in the "alert" bar.
-const AlertText = ["Vind en gratis pik i røven, sendes over MobilePay.",
+const AlertText = ["Vind en gratis pik i røven. Sendes over MobilePay.",
                    "Tak fordi du bruger vores bot!",
                    "Hættedregne represent!",
                    "BAZINGA!",
@@ -31,7 +31,7 @@ const AlertText = ["Vind en gratis pik i røven, sendes over MobilePay.",
                    "If a women has starch masks on her body does that mean she has been pargnet before.?",
                    "My friends did a luigi board.. and it mentioned me! PLEAS HELP!?",
                    "YEE",
-                   "Vidste du at vi kan skrive lige hvad vi vil i denne boks?",
+                   "Vidste du, at vi kan skrive, lige hvad vi vil i denne boks?",
                    "hvad vis du vis hvad han har gjort så ville du os forstå det 👌",
                    "Lavet af DaaseAllan og mads256c"];
 
@@ -80,9 +80,9 @@ function RefreshHTMLUpdate()
 
     //Take the raw HTML health and make it into something useful.
     var split = document.getElementById(HealthId).innerHTML.replace(/\s+/, "").split("/");
-    var PlayerHealth = split[0];
-    var PlayerHealthMax = split[1].split("HP")[0];
-    var PlayerHealthMin = PlayerHealthMax * 0.75;
+    var PlayerHealth = parseInt(split[0]);
+    var PlayerHealthMax = parseInt(split[1].split("HP")[0]);
+    var PlayerHealthMin = parseInt(Math.ceil(PlayerHealthMax * 0.75));
 
     //Go into regen mode if PlayerHealth is less or equal than min. health
     if (PlayerHealth <= PlayerHealthMin)
@@ -93,21 +93,13 @@ function RefreshHTMLUpdate()
         log("Maximum health: " + PlayerHealthMax);
     }
     //Go into attack mode if PlayerHealth is more or equal than max. health
-    else if (PlayerHealth >= PlayerHealthMax)
+    else
     {
         log("Currently attacking.");
         log("Current health: " + PlayerHealth);
         log("Desired health: " + PlayerHealthMin);
         log("Maximum health: " + PlayerHealthMax);
         document.getElementById(AttackId).click();
-    }
-    //Something went wrong report it.
-    else
-    {
-        log("Something went wrong");
-        log("Current health: " + PlayerHealth);
-        log("Desired health: " + PlayerHealthMin);
-        log("Maximum health: " + PlayerHealthMax);
     }
 
 
