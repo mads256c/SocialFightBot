@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.9
+// @version      0.10
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -11,16 +11,19 @@
 //*************
 //* Constants *
 //*************
+//The refresh delay
+const RefreshDelay = 15;
+
 //The HTML class or id names. If the site changes the names we can easily change it here.
-const HTMLAttack = "attack1";
-const HTMLHealth = "health";
-const HTMLAlert = "alert";
+const AttackId = "attack1";
+const HealthId = "health";
+const AlertClass = "alert";
 
 //The site killed the alert, so we are adding it back in here:
 const AlertHTML = "<a class=\"alert\" href=\"#\">Shitty Alert!</a>";
 
 //Stupid peices of text that we display in the "alert" bar.
-const responses = ["Vind en gratis pik i røven, sendes over MobilePay.",
+const AlertText = ["Vind en gratis pik i røven, sendes over MobilePay.",
                    "Tak fordi du bruger vores bot!",
                    "Hættedregne represent!",
                    "BAZINGA!",
@@ -55,6 +58,20 @@ function error(string)
     logString += "<p style=\"color: DarkRed\">" + string + "</p>";
 }
 
+
+//Refresh code
+var RefreshVar = RefreshDelay;
+
+function RefreshHTMLUpdate()
+{
+    setTimeout(function()
+    {
+        RefreshVar--;
+        document.getElementById("RefreshHTML").innerHTML = RefreshVar + " seconds until refreshing";
+        RefreshHTMLUpdate();
+    }, 1000);
+}
+
 (function() {
     //****************************
     //* Write critical code here *
@@ -62,7 +79,7 @@ function error(string)
 
 
     //Take the raw HTML health and make it into something useful.
-    var split = document.getElementById(HTMLHealth).innerHTML.replace(/\s+/, "").split("/");
+    var split = document.getElementById(HealthId).innerHTML.replace(/\s+/, "").split("/");
     var PlayerHealth = split[0];
     var PlayerHealthMax = split[1].split("HP")[0];
     var PlayerHealthMin = PlayerHealthMax * 0.75;
@@ -71,37 +88,41 @@ function error(string)
     if (PlayerHealth <= PlayerHealthMin)
     {
         log("Currently regenerating health.");
-        log("Deired health: " + PlayerHealthMin);
         log("Current health: " + PlayerHealth);
+        log("Desired health: " + PlayerHealthMin);
+        log("Maximum health: " + PlayerHealthMax);
     }
     //Go into attack mode if PlayerHealth is more or equal than max. health
     else if (PlayerHealth >= PlayerHealthMax)
     {
         log("Currently attacking.");
-        document.getElementById(HTMLAttack).click();
+        log("Current health: " + PlayerHealth);
+        log("Desired health: " + PlayerHealthMin);
+        log("Maximum health: " + PlayerHealthMax);
+        document.getElementById(AttackId).click();
     }
     //Something went wrong report it.
     else
     {
         log("Something went wrong");
-        log("Current Health: " + PlayerHealth);
+        log("Current health: " + PlayerHealth);
         log("Desired health: " + PlayerHealthMin);
         log("Maximum health: " + PlayerHealthMax);
     }
 
 
-    //Reloads the website after x secounds.
+    //Reloads the website after x seconds.
     setTimeout(function () {
         location.reload();
-    }, 15 * 1000);
+    }, RefreshDelay * 1000);
 
     //******************************
     //* Write uncritical code here *
     //******************************
 
     //The site killed the alert, so we are adding it back in here:
-    var AlertDIV = document.createElement('DIV');
-    AlertDIV.className = HTMLAlert;
+    var AlertDIV = document.createElement("DIV");
+    AlertDIV.className = AlertClass;
     AlertDIV.innerHTML = AlertHTML;
     //It have to be inserted at the top of the body before the header.
     document.body.insertBefore(AlertDIV, document.body.firstChild);
@@ -110,16 +131,32 @@ function error(string)
     document.getElementsByTagName("HEADER")[0].style.paddingTop = "30px";
 
     //Take a random text in responses and show it in the top of the website.
-    document.getElementsByClassName(HTMLAlert)[0].innerHTML = responses[Math.floor(Math.random()*responses.length)];
+    document.getElementsByClassName(AlertClass)[0].innerHTML = AlertText[Math.floor(Math.random()*AlertText.length)];
 
 
     //Print the console log on screen. Should run last.
-    ConsoleHTML = document.createElement("DIV");
+    var ConsoleHTML = document.createElement("DIV");
     ConsoleHTML.style.position = "fixed";
     ConsoleHTML.style.bottom = "0";
     ConsoleHTML.style.right = "0";
     ConsoleHTML.style.margin = "10px";
+    ConsoleHTML.style.padding = "5px";
+    ConsoleHTML.style.borderStyle = "dashed";
+    ConsoleHTML.style.borderWidth = "1px";
+    ConsoleHTML.style.borderRadius = "5px";
     ConsoleHTML.innerHTML = logString;
 
     document.body.appendChild(ConsoleHTML);
+
+    //Display the countdown to refreshing
+    var RefreshHTML = document.createElement("DIV");
+    RefreshHTML.style.position = "fixed";
+    RefreshHTML.style.bottom = "0";
+    RefreshHTML.style.left = "0";
+    RefreshHTML.style.margin = "10px";
+    RefreshHTML.innerHTML = RefreshVar + " seconds until refreshing";
+    RefreshHTML.id = "RefreshHTML";
+    document.body.appendChild(RefreshHTML);
+    RefreshHTMLUpdate();
+
 })();
