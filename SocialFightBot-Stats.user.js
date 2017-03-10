@@ -8,15 +8,17 @@
 // @run-at       document-end
 // ==/UserScript==
 
-const ProfileClass = "girl2";
-const ButtonClass = "buttons";
-const ProfileImageClass = "girl";
+const ProfileClass = ".girl2";
+const ButtonClass = ".buttons";
+const ProfileImageClass = ".girl";
+const WeaponClass = ".weapon";
+const StatsClass = ".stats";
 
 (function()
  {
     //Get the profile url.
-    var StatsURL = document.body.getElementsByClassName(ProfileClass)[0].children[0].href;
-    var EnemyStatsURL = document.body.getElementsByClassName(ProfileClass)[1].children[0].href;
+    var StatsURL = $(ProfileClass)[0].children[0].href;
+    var EnemyStatsURL = $(ProfileClass)[1].children[0].href;
 
     //Make a div where the stats should be in.
     var StatsDiv = document.createElement("div");
@@ -30,16 +32,17 @@ const ProfileImageClass = "girl";
     StatsDiv.id = "statsdiv";
     document.body.appendChild(StatsDiv);
     //Load the stats from StatsURL
-    $( "#statsdiv" ).load( StatsURL + " .stats" );
-
-    $("<div>").load(StatsURL + " .weapon, .girl", function() {
-        $("#statsdiv").append($(this));
+    $( "#statsdiv" ).load( StatsURL + " .stats, .weapon, .girl", function() {
         //Delete unneeded items
-        document.body.getElementsByClassName(ButtonClass)[0].outerHTML = "";
-        document.body.getElementsByClassName(ProfileImageClass)[0].children[0].innerHTML = "";
+        $(ButtonClass)[0].remove();
+        $(ProfileImageClass).first().children().first().remove();
         //Remove minHeight;
-        document.body.getElementsByClassName(ProfileImageClass)[0].style.minHeight = "0";
+        $(ProfileImageClass).first().css("min-height", "0");
+        //Fix ordering
+        $(WeaponClass).prependTo('#statsdiv');
+        $(StatsClass).first().prependTo('#statsdiv');
     });
+
 
     var EnemyStatsDiv = document.createElement("div");
     EnemyStatsDiv.style.position = "fixed";
