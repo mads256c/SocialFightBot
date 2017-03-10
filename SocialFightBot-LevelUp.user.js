@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         SocialFightBot-LevelUp
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.2
+// @version      0.3
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
-// @match        http://socialfight.dk/levelup
+// @match        http*://socialfight.dk/levelup
 // @run-at       document-end
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -53,6 +53,12 @@
     else
     {
         GM_setValue("state", 0);
+        window.location.reload();
     }
+
+    setTimeout(function(){
+        GM_setValue("state", 0);
+        window.location.reload();
+    }, 10000);
 
 })();
