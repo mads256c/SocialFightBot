@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Fight
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.12
+// @version      0.14
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -111,7 +111,7 @@ var RefreshVar = RefreshDelay;
 function RefreshHTMLUpdate()
 {
     setTimeout(function()
-    {
+               {
         RefreshVar--;
         $("#refreshhtml").html(RefreshVar + " sekunder tilbage.");
         RefreshHTMLUpdate();
@@ -123,9 +123,12 @@ function RefreshHTMLUpdate()
     //* Write critical code here *
     //****************************
 
+
     $('#health').bind("DOMSubtreeModified",function(){
         checkhealth();
     });
+    checkhealth();
+
     //It is important that this code runs, so if we add unnessesary or unstable code add it after this.
     //Reloads the website after x seconds.
     setTimeout(function(){
