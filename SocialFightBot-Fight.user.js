@@ -125,7 +125,10 @@ function RefreshHTMLUpdate()
     document.getElementsByTagName("HEADER")[0].style.paddingTop = "30px";
 
     //Take a random text in responses and show it in the top of the website.
-    document.getElementsByClassName(AlertClass)[0].innerHTML = AlertText[Math.floor(Math.random()*AlertText.length)];
+    var AlertElements = document.getElementsByClassName(AlertClass);
+    for (var i = 0; i < AlertElements.length; ++i) {
+        AlertElements[i].innerHTML = AlertText[Math.floor(Math.random()*AlertText.length)];
+    }
 
 
     //Print the console log on screen. Should run last.
