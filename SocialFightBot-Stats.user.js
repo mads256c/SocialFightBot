@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Stats
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.5
+// @version      0.6
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -30,14 +30,17 @@ const StatsClass = ".stats";
     StatsDiv.style.marginTop = "50px";
     StatsDiv.style.marginBottom = "50px";
     StatsDiv.id = "statsdiv";
-    document.body.appendChild(StatsDiv);
+    //Add to document
+    $("BODY").append(StatsDiv);
     //Load the stats from StatsURL
     $( "#statsdiv" ).load( StatsURL + " .stats, .weapon, .girl", function() {
         //Delete unneeded items
-        $(ButtonClass)[0].remove();
-        $(ProfileImageClass).first().children().first().remove();
-        //Remove minHeight
-        $(ProfileImageClass).first().css("min-height", "0");
+        $(ButtonClass)[0].remove(); // remove button
+        $(ProfileImageClass).first().children().first().remove(); // remove image
+        $(ProfileImageClass).first().children().first().remove(); // remove name
+        //Fix styling
+        $(ProfileImageClass).first().css("min-height", "0"); // remove min-height
+        $(ProfileImageClass).first().css("padding-top", "10px"); // fix for name removal
         //Fix ordering
         $(WeaponClass).prependTo('#statsdiv');
         $(StatsClass).first().prependTo('#statsdiv');
@@ -53,8 +56,8 @@ const StatsClass = ".stats";
     EnemyStatsDiv.style.marginTop = "50px";
     EnemyStatsDiv.style.marginBottom = "50px";
     EnemyStatsDiv.id = "enemystatsdiv";
-
-    document.body.appendChild(EnemyStatsDiv);
+    //Add to document
+    $("BODY").append(EnemyStatsDiv);
     //Load the enemy stats from EnemyStatsURL
     $( "#enemystatsdiv" ).load( EnemyStatsURL + " .stats" );
 })();
