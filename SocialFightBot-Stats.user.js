@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SocialFightBot-Stats
 // @namespace    https://github.com/mads256c/SocialFightBot
-// @version      0.4
+// @version      0.5
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
 // @match        http*://socialfight.dk/fight
@@ -36,7 +36,7 @@ const StatsClass = ".stats";
         //Delete unneeded items
         $(ButtonClass)[0].remove();
         $(ProfileImageClass).first().children().first().remove();
-        //Remove minHeight;
+        //Remove minHeight
         $(ProfileImageClass).first().css("min-height", "0");
         //Fix ordering
         $(WeaponClass).prependTo('#statsdiv');
@@ -55,6 +55,6 @@ const StatsClass = ".stats";
     EnemyStatsDiv.id = "enemystatsdiv";
 
     document.body.appendChild(EnemyStatsDiv);
-
+    //Load the enemy stats from EnemyStatsURL
     $( "#enemystatsdiv" ).load( EnemyStatsURL + " .stats" );
 })();
