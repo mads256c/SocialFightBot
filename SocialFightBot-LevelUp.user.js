@@ -37,13 +37,13 @@
     {
         GM_setValue("state", GM_getValue("state", 0)+ 1);
         if (Math.floor(Math.random()*100) == 1)
-            {
-                window.location.href = HPup;
-            }
-            else
-            {
-                window.location.href = RegenUp;
-            }
+        {
+            window.location.href = HPup;
+        }
+        else
+        {
+            window.location.href = RegenUp;
+        }
     }
     else if (GM_getValue("state", 0) == 4)
     {

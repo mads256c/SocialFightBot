@@ -13,7 +13,7 @@ const ButtonClass = "buttons";
 const ProfileImageClass = "girl";
 
 (function()
-{
+ {
     //Get the profile url.
     var StatsURL = document.body.getElementsByClassName(ProfileClass)[0].children[0].href;
     var EnemyStatsURL = document.body.getElementsByClassName(ProfileClass)[1].children[0].href;
@@ -33,14 +33,14 @@ const ProfileImageClass = "girl";
     $( "#statsdiv" ).load( StatsURL + " .stats" );
 
     $("<div>").load(StatsURL + " .weapon, .girl", function() {
-      $("#statsdiv").append($(this));
-            //Delete unneeded items
-            document.body.getElementsByClassName(ButtonClass)[0].outerHTML = "";
-            document.body.getElementsByClassName(ProfileImageClass)[0].children[0].innerHTML = "";
-            //Remove minHeight;
-            document.body.getElementsByClassName(ProfileImageClass)[0].style.minHeight = "0";
+        $("#statsdiv").append($(this));
+        //Delete unneeded items
+        document.body.getElementsByClassName(ButtonClass)[0].outerHTML = "";
+        document.body.getElementsByClassName(ProfileImageClass)[0].children[0].innerHTML = "";
+        //Remove minHeight;
+        document.body.getElementsByClassName(ProfileImageClass)[0].style.minHeight = "0";
     });
-    
+
     var EnemyStatsDiv = document.createElement("div");
     EnemyStatsDiv.style.position = "fixed";
     EnemyStatsDiv.style.right = "0";
@@ -50,8 +50,8 @@ const ProfileImageClass = "girl";
     EnemyStatsDiv.style.marginTop = "50px";
     EnemyStatsDiv.style.marginBottom = "50px";
     EnemyStatsDiv.id = "enemystatsdiv";
-    
+
     document.body.appendChild(EnemyStatsDiv);
-    
-        $( "#enemystatsdiv" ).load( EnemyStatsURL + " .stats" );
+
+    $( "#enemystatsdiv" ).load( EnemyStatsURL + " .stats" );
 })();

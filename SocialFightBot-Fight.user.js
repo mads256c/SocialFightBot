@@ -33,7 +33,9 @@ const AlertText = ["Vind en gratis pik i røven. Sendes over MobilePay.",
                    "YEE",
                    "Vidste du, at vi kan skrive, lige hvad vi vil i denne boks?",
                    "hvad vis du vis hvad han har gjort så ville du os forstå det 👌",
-                   "Lavet af DaaseAllan og mads256c"];
+                   "Lavet af DaaseAllan og mads256c",
+                   "Hvis du ikke skal bruge Stats, slå dem fra så botten kører hurtigere.",
+                   "Vi har også lavet en bot til kridellerkran.dk"];
 
 //**************************************
 //* Code for the logging functionality *
@@ -65,7 +67,7 @@ var RefreshVar = RefreshDelay;
 function RefreshHTMLUpdate()
 {
     setTimeout(function()
-    {
+               {
         RefreshVar--;
         document.getElementById("RefreshHTML").innerHTML = RefreshVar + " seconds until refreshing";
         RefreshHTMLUpdate();
