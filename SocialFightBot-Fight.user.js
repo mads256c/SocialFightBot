@@ -130,9 +130,9 @@ function RefreshHTMLUpdate()
     checkhealth();
 
     //It is important that this code runs, so if we add unnessesary or unstable code add it after this.
-    //Reloads the website after x seconds.
+    //Reloads the website after x seconds. Sidenote: Now harvestes "coins" instead. Still has same basic function.
     setTimeout(function(){
-        location.reload();
+        window.location = 'farm?p';
     }, RefreshDelay * 1000);
 
     //******************************
