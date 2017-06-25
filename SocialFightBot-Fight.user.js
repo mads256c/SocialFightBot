@@ -4,7 +4,7 @@
 // @version      0.14
 // @description  A bot for socialfight.dk
 // @author       DaaseAllan and mads256c
-// @match        http*://socialfight.dk/fight
+// @match        http*://offen.dk/fight
 // @run-at       document-end
 // ==/UserScript==
 
@@ -87,7 +87,7 @@ function checkhealth()
     var PlayerHealthMin = parseInt(Math.ceil(PlayerHealthMax * 0.75));
 
     //Go into regen mode if PlayerHealth is less or equal than min. health
-    if (PlayerHealth <= PlayerHealthMin)
+    if (PlayerHealth < PlayerHealthMin)
     {
         log("Currently regenerating health.");
         log("Current health: " + PlayerHealth);
@@ -95,7 +95,7 @@ function checkhealth()
         log("Maximum health: " + PlayerHealthMax);
     }
     //Go into attack mode if PlayerHealth is more or equal than max. health
-    else
+    else if (PlayerHealth >= PlayerHealthMin||PlayerHealth.isNaN === false)
     {
         log("Currently attacking.");
         log("Current health: " + PlayerHealth);
